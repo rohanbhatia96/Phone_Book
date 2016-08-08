@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sq = openOrCreateDatabase("mydb", SQLiteDatabase.CREATE_IF_NECESSARY, null);
+        sq.execSQL("create table if not exists phonebook(first text,last text,email text, phone text)");
         EV = (ExpandableListView) findViewById(R.id.NameList);
         contacts = DataProvider.getInfo(sq);
         con_details = new ArrayList<String>(contacts.keySet());
