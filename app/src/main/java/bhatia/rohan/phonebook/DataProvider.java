@@ -13,14 +13,13 @@ public class DataProvider {
 
     public static HashMap<String, List<String>> getInfo(SQLiteDatabase sq) {
         HashMap<String, List<String>> contacts = new HashMap<String, List<String>>();
-        List<String> details=new ArrayList<String>();
         Cursor obj=sq.query("phonebook",null,null,null,null,null,null,null);
         if(obj.moveToFirst())
         {
             String s;
             while(obj.isAfterLast()==false)
             {
-                details.clear();
+                List<String> details=new ArrayList<String>();
                 for(int i=0;i<4;i++)
                 {
                     s=obj.getString(i);
