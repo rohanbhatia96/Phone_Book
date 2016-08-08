@@ -1,5 +1,7 @@
 package bhatia.rohan.phonebook;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,13 +11,28 @@ import java.util.List;
  */
 public class DataProvider {
 
-    public static HashMap<String, List<String>> getInfo() {
+    public static HashMap<String, List<String>> getInfo(SQLiteDatabase sq) {
         HashMap<String, List<String>> contacts = new HashMap<String, List<String>>();
         List<String> details=new ArrayList<String>();
-        details.add("Rohan");
-        details.add("Bhatia");
+        Cursor obj=sq.query("phonebook",null,null,null,null,null,null,null);
+        if(obj.moveToFirst())
+        {
+            String s;
+            while(obj.isAfterLast()==false)
+            {
+                details.clear();
+                for(int i=0;i<4;i++)
+                {
+                    s=obj.getString(i);
+                    details.add(s);
+                }
+                contacts.put(details.get(0)+" "+details.get(1), details);
+                obj.moveToNext();
+            }
+        }
 
-        contacts.put("Rohan Bhatia", details);
+        obj.close();
+
 
         return contacts;
     }
